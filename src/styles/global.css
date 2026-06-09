@@ -14,6 +14,7 @@
   --success: #2b8a3e;
   --success-bg: #ebfbee;
   --warning: #e67700;
+  --warning-hover: #d46900;
   --warning-bg: #fff9db;
   --danger: #c92a2a;
   --danger-bg: #fff5f5;
@@ -46,6 +47,7 @@
   --success: #3fb950;
   --success-bg: #0d2818;
   --warning: #d29922;
+  --warning-hover: #bb8a1f;
   --warning-bg: #2a1f00;
   --danger: #f85149;
   --danger-bg: #2d1117;
@@ -1124,6 +1126,51 @@ a:hover {
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-top: 8px solid var(--accent-hover);
+}
+
+.por-vencer {
+  flex: 1;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--warning);
+  background: linear-gradient(135deg, rgba(230, 119, 0, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+  border: 2px solid var(--warning);
+  transition: all var(--transition);
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(230, 119, 0, 0.2);
+}
+
+.por-vencer:hover {
+  color: var(--warning-hover, #d46900);
+  background: linear-gradient(135deg, rgba(230, 119, 0, 0.2) 0%, rgba(255, 152, 0, 0.2) 100%);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(230, 119, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.por-vencer.active {
+  color: white;
+  background: linear-gradient(135deg, var(--warning) 0%, var(--warning-hover, #d46900) 100%);
+  border-color: var(--warning-hover, #d46900);
+  box-shadow: 0 4px 12px rgba(230, 119, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.por-vencer.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--warning-hover, #d46900);
 }
 .por-vencer {
   flex: 1;
