@@ -44,14 +44,6 @@ export function Layout() {
       <header className="app-header" role="banner">
         <div className="header-left">
           <h1 className="app-logo">SegurosPro</h1>
-          <nav className="main-nav" aria-label="Navegación principal">
-            <NavLink to="/policies" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              Todas las pólizas
-            </NavLink>
-            <NavLink to="/expiring" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              Por vencer
-            </NavLink>
-          </nav>
         </div>
         <div className="header-right">
           <ThemeToggle />
@@ -64,6 +56,14 @@ export function Layout() {
           </div>
         </div>
       </header>
+          <nav className="main-nav" aria-label="Navegación principal">
+            <NavLink to="/policies" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+              Todas las pólizas
+            </NavLink>
+            <NavLink to="/expiring" className={({ isActive }) => isActive ? "por-vencer active" : "por-vencer"} >
+              Por vencer
+            </NavLink>
+          </nav>
       <main className="app-main" role="main">
         <Outlet />
       </main>
