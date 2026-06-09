@@ -149,26 +149,6 @@ a:hover {
   color: var(--accent);
   background: var(--accent-light);
 }
-.por-vencer {
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  transition: all var(--transition);
-  text-decoration: none;
-}
-
-.por-vencer:hover {
-  color: var(--text-primary);
-  background: var(--bg-tertiary);
-  text-decoration: none;
-}
-
-.por-vencer.active {
-  color: var(--accent);
-  background: var(--accent-light);
-}
 
 .header-right {
   display: flex;
@@ -1172,44 +1152,7 @@ a:hover {
   border-right: 8px solid transparent;
   border-top: 8px solid var(--warning-hover, #d46900);
 }
-.por-vencer {
-  flex: 1;
-  padding: 12px 24px;
-  border-radius: var(--radius-sm);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: all var(--transition);
-  text-decoration: none;
-  text-align: center;
-  position: relative;
-}
 
-.por-vencer:hover {
-  color: var(--text-primary);
-  background: var(--bg-card);
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.por-vencer.active {
-  color: white;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.3);
-}
-
-.por-vencer.active::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid var(--accent-hover);
-}
 
 .data-table {
   box-shadow: var(--shadow-sm);
