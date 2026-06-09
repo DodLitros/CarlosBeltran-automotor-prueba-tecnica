@@ -6,12 +6,11 @@ import { useSort } from "../hooks/useSort"
 import { SearchBar } from "../components/SearchBar"
 import { SortableHeader } from "../components/SortableHeader"
 import { CreateClientModal } from "../components/CreateClientModal"
-import { getPoliciesByAgent } from "../services/policyService"
-import { createClient } from "../services/clientService"
+import { getPoliciesByAgent, createClientWithPolicy } from "../services/policyService"
 import { formatCOP, formatDate, getDaysUntilExpiration, getExpirationLabel, getExpirationClass } from "../lib/utils"
 import { sortPolicies } from "../lib/sortHelpers"
 import { POLICY_STATUS_LABELS } from "../constants"
-import type { PolicyWithClient, InsuranceClientInsert } from "../types"
+import type { PolicyWithClient, CreateClientWithPolicyData } from "../types"
 
 export function AllPoliciesPage() {
   const { agent } = useAuth()
@@ -57,8 +56,9 @@ export function AllPoliciesPage() {
     return result
   }, [policies, searchText, sortConfig])
 
-  const handleCreateClient = async (client: InsuranceClientInsert) => {
-    await createClient(client)
+  const handleCreateClient = async (data: CreateClientWithPolicyData) => {
+    if (!agent) return
+    await createClientWithPolicy(agent.id, data)
     await loadPolicies()
     await refresh()
   }

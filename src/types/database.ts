@@ -71,6 +71,30 @@ export type Database = {
           }
         ]
       }
+      insurers: {
+        Row: {
+          code: string | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+        }
+        Relationships: []
+      }
       policies: {
         Row: {
           agent_id: number
@@ -79,8 +103,9 @@ export type Database = {
           expiration_date: string
           id: string
           insurer: string
+          insurer_id: string | null
           notes: string | null
-          policy_type: string
+          policy_type: Database["public"]["Enums"]["policy_type_enum"]
           price: number
           start_date: string
           status: string
@@ -93,8 +118,9 @@ export type Database = {
           expiration_date: string
           id?: string
           insurer: string
+          insurer_id?: string | null
           notes?: string | null
-          policy_type: string
+          policy_type: Database["public"]["Enums"]["policy_type_enum"]
           price?: number
           start_date: string
           status?: string
@@ -107,8 +133,9 @@ export type Database = {
           expiration_date?: string
           id?: string
           insurer?: string
+          insurer_id?: string | null
           notes?: string | null
-          policy_type?: string
+          policy_type?: Database["public"]["Enums"]["policy_type_enum"]
           price?: number
           start_date?: string
           status?: string
@@ -128,6 +155,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "insurance_clients"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policies_insurer_id_fkey"
+            columns: ["insurer_id"]
+            isOneToOne: false
+            referencedRelation: "insurers"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -137,8 +171,9 @@ export type Database = {
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     Functions: {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    Enums: {}
+    Enums: {
+      policy_type_enum: "Automóvil" | "Moto" | "Hogar" | "Vida" | "Salud"
+    }
     CompositeTypes: {
       [_ in never]: never
     }
@@ -226,4 +261,21 @@ export type TablesUpdate<
       }
       ? U
       : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never

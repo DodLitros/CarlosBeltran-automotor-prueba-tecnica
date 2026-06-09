@@ -1,4 +1,4 @@
-import type { PolicyType, Insurer } from "../types"
+import type { PolicyType } from "../types"
 
 export const POLICY_TYPES: PolicyType[] = [
   "Automóvil",
@@ -8,7 +8,7 @@ export const POLICY_TYPES: PolicyType[] = [
   "Salud",
 ]
 
-export const INSURERS: Insurer[] = [
+export const INSURERS = [
   "Sura",
   "Bolívar",
   "Liberty",
@@ -19,7 +19,7 @@ export const INSURERS: Insurer[] = [
   "Seguros del Estado",
   "Previsora",
   "Positiva",
-]
+] as const
 
 export const POLICY_STATUS_LABELS: Record<string, string> = {
   vigente: "Vigente",

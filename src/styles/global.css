@@ -577,7 +577,13 @@ a:hover {
   padding: 24px;
   width: 90%;
   max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: var(--shadow-lg);
+}
+
+.modal-content.modal-large {
+  max-width: 560px;
 }
 
 .modal-header {
@@ -642,6 +648,54 @@ a:hover {
 .form-group select:focus {
   border-color: var(--accent);
   outline: none;
+}
+
+.form-group textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  resize: vertical;
+  transition: border-color var(--transition);
+}
+
+.form-group textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.form-section {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin: 0;
+}
+
+.form-section legend {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h3 {
+  margin-bottom: 0;
 }
 
 .form-error {
@@ -882,6 +936,10 @@ a:hover {
   }
 
   .policies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
     grid-template-columns: 1fr;
   }
 

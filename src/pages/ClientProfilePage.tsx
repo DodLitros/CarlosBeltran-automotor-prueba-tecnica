@@ -1,15 +1,18 @@
 import { useState, useEffect, useCallback } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 import { useNotifications } from "../context/NotificationContext"
 import { getClientById, updateClient } from "../services/clientService"
-import { updatePolicy } from "../services/policyService"
+import { updatePolicy, createPolicy } from "../services/policyService"
+import { CreatePolicyModal } from "../components/CreatePolicyModal"
 import { formatCOP, formatDate, getDaysUntilExpiration, getExpirationLabel, getExpirationClass, getClientTenure, getInitials } from "../lib/utils"
 import { POLICY_STATUS_LABELS } from "../constants"
-import type { ClientWithPolicies } from "../types"
+import type { ClientWithPolicies, PolicyType } from "../types"
 
 export function ClientProfilePage() {
   const { clientId } = useParams<{ clientId: string }>()
   const navigate = useNavigate()
+  const { agent } = useAuth()
   const { refresh } = useNotifications()
   const [client, setClient] = useState<ClientWithPolicies | null>(null)
   const [loading, setLoading] = useState(true)
@@ -17,6 +20,7 @@ export function ClientProfilePage() {
   const [editName, setEditName] = useState("")
   const [editDoc, setEditDoc] = useState("")
   const [editPhone, setEditPhone] = useState("")
+  const [showCreatePolicy, setShowCreatePolicy] = useState(false)
 
   const loadClient = useCallback(async () => {
     if (!clientId) return
@@ -50,6 +54,32 @@ export function ClientProfilePage() {
 
   const handlePolicyStatusChange = async (policyId: string, status: string) => {
     await updatePolicy(policyId, { status })
+    await loadClient()
+    await refresh()
+  }
+
+  const handleCreatePolicy = async (data: {
+    policy_type: PolicyType
+    insurer_id: string
+    insurer_name: string
+    start_date: string
+    expiration_date: string
+    price: number
+    notes: string
+  }) => {
+    if (!client || !agent) return
+    await createPolicy({
+      agent_id: agent.id,
+      client_id: client.id,
+      policy_type: data.policy_type,
+      insurer: data.insurer_name,
+      insurer_id: data.insurer_id,
+      start_date: data.start_date,
+      expiration_date: data.expiration_date,
+      price: data.price,
+      status: "vigente",
+      notes: data.notes,
+    })
     await loadClient()
     await refresh()
   }
@@ -104,7 +134,12 @@ export function ClientProfilePage() {
       </div>
 
       <div className="profile-policies">
-        <h3>Pólizas ({client.policies?.length ?? 0})</h3>
+        <div className="section-header">
+          <h3>Pólizas ({client.policies?.length ?? 0})</h3>
+          <button className="btn-primary btn-small" onClick={() => setShowCreatePolicy(true)}>
+            + Nueva póliza
+          </button>
+        </div>
         {client.policies && client.policies.length > 0 ? (
           <div className="policies-grid">
             {client.policies.map((policy) => {
@@ -162,6 +197,15 @@ export function ClientProfilePage() {
           <p className="empty-state">Este cliente no tiene pólizas registradas</p>
         )}
       </div>
+
+      {showCreatePolicy && agent && (
+        <CreatePolicyModal
+          clientId={client.id}
+          agentId={agent.id}
+          onSubmit={handleCreatePolicy}
+          onClose={() => setShowCreatePolicy(false)}
+        />
+      )}
     </div>
   )
 }
