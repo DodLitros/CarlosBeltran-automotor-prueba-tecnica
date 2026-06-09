@@ -22,6 +22,7 @@ export const INSURERS = [
 ] as const
 
 export const POLICY_STATUS_LABELS: Record<string, string> = {
+  vigente: "Vigente",
   por_vencer: "Por vencer",
   vencida: "Vencida",
   en_gestion: "En gestión",
