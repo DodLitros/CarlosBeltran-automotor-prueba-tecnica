@@ -959,3 +959,272 @@ a:hover {
     display: none;
   }
 }
+
+.policy-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-renew {
+  width: 100%;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 2px 4px rgba(66, 99, 235, 0.2);
+}
+
+.btn-renew:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(66, 99, 235, 0.3);
+}
+
+.btn-renew:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.renewal-info {
+  background: var(--bg-secondary);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.renewal-info .info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.875rem;
+}
+
+.renewal-info .info-row .label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.renewal-history {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.renewal-history h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.renewal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.renewal-item {
+  background: var(--bg-secondary);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+}
+
+.renewal-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.renewal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8125rem;
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.main-nav {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.nav-link {
+  flex: 1;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-link.active {
+  color: white;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.3);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--accent-hover);
+}
+
+.data-table {
+  box-shadow: var(--shadow-sm);
+}
+
+.data-table thead {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+.data-table tbody tr {
+  transition: all var(--transition);
+}
+
+.data-table tbody tr:hover {
+  background: linear-gradient(90deg, var(--bg-secondary) 0%, transparent 100%);
+  transform: scale(1.001);
+}
+
+.table-row-clickable {
+  border-left: 4px solid transparent;
+}
+
+.table-row-clickable.row-safe {
+  border-left-color: var(--success);
+  background: linear-gradient(90deg, var(--success-bg) 0%, transparent 20%);
+}
+
+.table-row-clickable.row-soon,
+.table-row-clickable.row-warning {
+  border-left-color: var(--warning);
+  background: linear-gradient(90deg, var(--warning-bg) 0%, transparent 20%);
+}
+
+.table-row-clickable.row-critical,
+.table-row-clickable.row-expired {
+  border-left-color: var(--danger);
+  background: linear-gradient(90deg, var(--danger-bg) 0%, transparent 20%);
+}
+
+.policy-card {
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.policy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-safe {
+  border-left: 4px solid var(--success);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--success-bg) 100%);
+}
+
+.card-soon,
+.card-warning {
+  border-left: 4px solid var(--warning);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--warning-bg) 100%);
+}
+
+.card-critical,
+.card-expired {
+  border-left: 4px solid var(--danger);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--danger-bg) 100%);
+}
+
+.page-header {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-header {
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+}
+
+.avatar {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.3);
+}
+
+.modal-content {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  box-shadow: 0 2px 8px rgba(66, 99, 235, 0.3);
+  transition: all var(--transition);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.4);
+}
+
+.notification-badge {
+  background: linear-gradient(135deg, var(--danger) 0%, #ff6b6b 100%);
+  box-shadow: 0 2px 8px rgba(201, 42, 42, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

@@ -4,10 +4,22 @@ import { useAuth } from "../context/AuthContext"
 import { useNotifications } from "../context/NotificationContext"
 import { getClientById, updateClient } from "../services/clientService"
 import { updatePolicy, createPolicy } from "../services/policyService"
+import { createRenewal } from "../services/renewalService"
 import { CreatePolicyModal } from "../components/CreatePolicyModal"
+import { RenewPolicyModal } from "../components/RenewPolicyModal"
 import { formatCOP, formatDate, getDaysUntilExpiration, getExpirationLabel, getExpirationClass, getClientTenure, getInitials } from "../lib/utils"
 import { POLICY_STATUS_LABELS } from "../constants"
-import type { ClientWithPolicies, PolicyType } from "../types"
+import type { ClientWithPolicies, Policy, PolicyType } from "../types"
+
+function canRenewPolicy(policy: Policy): boolean {
+  const days = getDaysUntilExpiration(policy.expiration_date)
+  return days >= -30
+}
+
+function canChangeToEnGestion(policy: Policy): boolean {
+  const days = getDaysUntilExpiration(policy.expiration_date)
+  return days >= -30
+}
 
 export function ClientProfilePage() {
   const { clientId } = useParams<{ clientId: string }>()
@@ -21,6 +33,7 @@ export function ClientProfilePage() {
   const [editDoc, setEditDoc] = useState("")
   const [editPhone, setEditPhone] = useState("")
   const [showCreatePolicy, setShowCreatePolicy] = useState(false)
+  const [renewingPolicy, setRenewingPolicy] = useState<Policy | null>(null)
 
   const loadClient = useCallback(async () => {
     if (!clientId) return
@@ -52,8 +65,12 @@ export function ClientProfilePage() {
     await loadClient()
   }
 
-  const handlePolicyStatusChange = async (policyId: string, status: string) => {
-    await updatePolicy(policyId, { status })
+  const handlePolicyStatusChange = async (policy: Policy, status: string) => {
+    if (status === "en_gestion" && !canChangeToEnGestion(policy)) {
+      alert("No se puede cambiar a 'En gestión' porque la póliza está vencida por más de 30 días")
+      return
+    }
+    await updatePolicy(policy.id, { status })
     await loadClient()
     await refresh()
   }
@@ -80,6 +97,33 @@ export function ClientProfilePage() {
       status: "vigente",
       notes: data.notes,
     })
+    await loadClient()
+    await refresh()
+  }
+
+  const handleRenewPolicy = async (data: {
+    new_expiration_date: string
+    new_price: number
+  }) => {
+    if (!renewingPolicy || !agent) return
+    
+    await createRenewal({
+      policy_id: renewingPolicy.id,
+      previous_expiration_date: renewingPolicy.expiration_date,
+      new_expiration_date: data.new_expiration_date,
+      previous_price: renewingPolicy.price,
+      new_price: data.new_price,
+      renewed_by: agent.id,
+    })
+    
+    await updatePolicy(renewingPolicy.id, {
+      start_date: renewingPolicy.expiration_date,
+      expiration_date: data.new_expiration_date,
+      price: data.new_price,
+      status: "vigente",
+    })
+    
+    setRenewingPolicy(null)
     await loadClient()
     await refresh()
   }
@@ -144,6 +188,9 @@ export function ClientProfilePage() {
           <div className="policies-grid">
             {client.policies.map((policy) => {
               const days = getDaysUntilExpiration(policy.expiration_date)
+              const canRenew = canRenewPolicy(policy)
+              const canEnGestion = canChangeToEnGestion(policy)
+              
               return (
                 <div key={policy.id} className={`policy-card card-${getExpirationClass(days)}`}>
                   <div className="policy-card-header">
@@ -151,12 +198,17 @@ export function ClientProfilePage() {
                     <select
                       className={`status-select status-${policy.status}`}
                       value={policy.status}
-                      onChange={(e) => handlePolicyStatusChange(policy.id, e.target.value)}
+                      onChange={(e) => handlePolicyStatusChange(policy, e.target.value)}
                       aria-label="Cambiar estado"
                     >
-                      {Object.entries(POLICY_STATUS_LABELS).map(([val, label]) => (
-                        <option key={val} value={val}>{label}</option>
-                      ))}
+                      {Object.entries(POLICY_STATUS_LABELS).map(([val, label]) => {
+                        const isDisabled = val === "en_gestion" && !canEnGestion
+                        return (
+                          <option key={val} value={val} disabled={isDisabled}>
+                            {label} {isDisabled ? "(No disponible)" : ""}
+                          </option>
+                        )
+                      })}
                     </select>
                   </div>
                   <div className="policy-card-body">
@@ -188,6 +240,16 @@ export function ClientProfilePage() {
                         <span>{policy.notes}</span>
                       </div>
                     )}
+                    <div className="policy-actions">
+                      <button
+                        className="btn-renew"
+                        onClick={() => setRenewingPolicy(policy)}
+                        disabled={!canRenew}
+                        title={canRenew ? "Renovar póliza" : "No se puede renovar: vencida por más de 30 días"}
+                      >
+                        Renovar
+                      </button>
+                    </div>
                   </div>
                 </div>
               )
@@ -204,6 +266,14 @@ export function ClientProfilePage() {
           agentId={agent.id}
           onSubmit={handleCreatePolicy}
           onClose={() => setShowCreatePolicy(false)}
+        />
+      )}
+
+      {renewingPolicy && (
+        <RenewPolicyModal
+          policy={renewingPolicy}
+          onSubmit={handleRenewPolicy}
+          onClose={() => setRenewingPolicy(null)}
         />
       )}
     </div>

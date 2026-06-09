@@ -4,11 +4,13 @@ export type Agent = Tables<"agents">
 export type InsuranceClient = Tables<"insurance_clients">
 export type Policy = Tables<"policies">
 export type Insurer = Tables<"insurers">
+export type PolicyRenewal = Tables<"policy_renewals">
 
 export type AgentInsert = TablesInsert<"agents">
 export type InsuranceClientInsert = TablesInsert<"insurance_clients">
 export type PolicyInsert = TablesInsert<"policies">
 export type InsurerInsert = TablesInsert<"insurers">
+export type PolicyRenewalInsert = TablesInsert<"policy_renewals">
 
 export type PolicyUpdate = TablesUpdate<"policies">
 export type InsuranceClientUpdate = TablesUpdate<"insurance_clients">

@@ -165,6 +165,54 @@ export type Database = {
           }
         ]
       }
+      policy_renewals: {
+        Row: {
+          id: string
+          policy_id: string
+          previous_expiration_date: string
+          new_expiration_date: string
+          previous_price: number
+          new_price: number
+          renewed_at: string | null
+          renewed_by: number | null
+        }
+        Insert: {
+          id?: string
+          policy_id: string
+          previous_expiration_date: string
+          new_expiration_date: string
+          previous_price: number
+          new_price: number
+          renewed_at?: string | null
+          renewed_by?: number | null
+        }
+        Update: {
+          id?: string
+          policy_id?: string
+          previous_expiration_date?: string
+          new_expiration_date?: string
+          previous_price?: number
+          new_price?: number
+          renewed_at?: string | null
+          renewed_by?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "policy_renewals_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policy_renewals_renewed_by_fkey"
+            columns: ["renewed_by"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
