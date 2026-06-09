@@ -36,7 +36,7 @@ export function ExpiringPoliciesPage() {
   const navigate = useNavigate()
   const [filter, setFilter] = useState<ExpiringFilter>("all")
   const [searchText, setSearchText] = useState("")
-  const { sortConfig, toggleSort } = useSort("expiration_date")
+  const { sortConfig, toggleSort } = useSort("full_name", "asc")
   const [editingNotes, setEditingNotes] = useState<string | null>(null)
   const [noteValue, setNoteValue] = useState("")
 

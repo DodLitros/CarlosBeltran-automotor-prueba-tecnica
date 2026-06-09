@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react"
 import type { SortConfig, SortDirection } from "../types"
 
-export function useSort(defaultKey: string = "") {
+export function useSort(defaultKey: string = "", defaultDirection: SortDirection = null) {
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: defaultKey,
-    direction: null,
+    direction: defaultDirection,
   })
 
   const toggleSort = useCallback((key: string) => {

@@ -19,7 +19,7 @@ export function AllPoliciesPage() {
   const [policies, setPolicies] = useState<PolicyWithClient[]>([])
   const [loading, setLoading] = useState(true)
   const [showCreateModal, setShowCreateModal] = useState(false)
-  const { sortConfig, toggleSort } = useSort()
+  const { sortConfig, toggleSort } = useSort("full_name", "asc")
   const [searchText, setSearchText] = useState("")
 
   const loadPolicies = useCallback(async () => {
