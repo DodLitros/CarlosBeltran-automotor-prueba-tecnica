@@ -1,6 +1,6 @@
 # ¿Cómo correrlo?
 
-- Visitar esta página: [text](https://carlos-beltran-automotor-prueba-tec.vercel.app/policies)
+- Visitar esta página: [App link](https://carlos-beltran-automotor-prueba-tec.vercel.app/policies)
 - Para ver la basede datos en supabase se envió un correo a rrhh@agentemotor.com, debe crear una cuenta en supabase, y posteriormente puede ver la aplicación backend. sin embargo, toda está bien listado en este repositorio
 
 ---
@@ -15,7 +15,7 @@
 ---
 ## Vídeo
 
-Link de explicación del vídeo: [text](https://youtube.com/shorts/jLBID5KE2lA?si=8n4h44AQoP2aEkBx)
+Link de explicación del vídeo: [Video YT](https://youtube.com/shorts/jLBID5KE2lA?si=8n4h44AQoP2aEkBx)
 
 ---
 

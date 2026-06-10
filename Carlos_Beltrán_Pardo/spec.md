@@ -10,7 +10,7 @@ La primera tabla, que contiene toda la información de sus clientes la pensé pa
 
 # Decisiones
 
-**github**: En el repositorio de github está todo commiteado correctamente, para ver cada cambio hecho, todo el desarrollo está documentado ahí. [text](https://github.com/DodLitros/CarlosBeltran-automotor-prueba-tecnica)
+**github**: En el repositorio de github está todo commiteado correctamente, para ver cada cambio hecho, todo el desarrollo está documentado ahí. [repositorio](https://github.com/DodLitros/CarlosBeltran-automotor-prueba-tecnica)
 
 ## Lo que dejé afuera
 
